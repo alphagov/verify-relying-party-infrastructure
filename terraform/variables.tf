@@ -1,0 +1,2 @@
+variable "dbuser" {}
+variable "dbpass" {}

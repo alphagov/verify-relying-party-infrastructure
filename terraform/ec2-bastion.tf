@@ -1,7 +1,7 @@
-module "pubinstance1" { # TODO rename this
+module "verify_connect_bastion" {
   source = "terraform-aws-modules/ec2-instance/aws"
 
-  name = "pubrpdev1" # TODO rename this
+  name = "verify_connect_bastion"
 
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.micro"
