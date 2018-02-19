@@ -8,7 +8,7 @@ module "verify_connect_sg" {
   ingress_with_cidr_blocks = [
     {
       rule        = "ssh-tcp"
-      cidr_blocks = "213.86.153.245/32" # Office IP for now - TODO make this better
+      cidr_blocks = "213.86.153.245/32,10.0.0.0/16"
     },
     {
       rule        = "https-443-tcp"
