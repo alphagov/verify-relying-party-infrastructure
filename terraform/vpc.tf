@@ -9,7 +9,9 @@ module "vpc" {
   public_subnets  = ["10.0.102.0/24", "10.0.103.0/24", "10.0.104.0/24"]
 
   enable_nat_gateway = true
-  enable_vpn_gateway = true
+  single_nat_gateway = false
+  external_nat_ip_ids = [""]
+
 
   tags = {
     Terraform   = "true"

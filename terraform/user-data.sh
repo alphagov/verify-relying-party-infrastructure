@@ -1,7 +1,7 @@
 #!/bin/bash
-apt-get update -y
-apt-get install -y apache2
-groupadd www
-usermod -a -G www ubuntu
-chown -R root:www /var/www
-chmod 2775 /var/www
+apt-get install -y software-properties-common
+add-apt-repository ppa:webupd8team/java
+apt-get update
+echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
+apt-get install -y oracle-java8-installer

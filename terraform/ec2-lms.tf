@@ -10,7 +10,7 @@ module "verify_connect_lms" {
   vpc_security_group_ids      = ["${module.verify_connect_sg.this_security_group_id}"]
   subnet_id                   = "${module.vpc.private_subnets[0]}"
   disable_api_termination     = false
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   source_dest_check           = false
   user_data                   = "${file("user-data.sh")}"
 
