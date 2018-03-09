@@ -1,0 +1,19 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+unless File.exists?('pki/signing-private-key.pk8')
+  puts "\e[31mPlease run make to generate the pki before running vagrant\e[0m"
+  exit 1
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.network "forwarded_port", guest: 50100, host: 8080
+
+  config.vm.provision "file", source: "pki/signing-private-key.pk8", destination: "~/pki/signing-private-key.pk8"
+  config.vm.provision "file", source: "pki/encryption-private-key.pk8", destination: "~/pki/encryption-private-key.pk8"
+  config.vm.provision "file", source: "start.sh", destination: "~/start.sh"
+
+  config.vm.provision "shell", path: "provision.sh"
+end

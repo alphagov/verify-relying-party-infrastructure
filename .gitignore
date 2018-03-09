@@ -3,3 +3,5 @@
 .terraform
 *.swp
 secrets.auto.tfvars
+.vagrant
+/vagrant/vsp/pki
