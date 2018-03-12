@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+unless File.exists?('vsp/pki/signing-private-key.pk8')
+  puts "\e[31mPlease run `cd vsp && make` to generate the pki before running vagrant\e[0m"
+  exit 1
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  config.vm.define "vsp" do |vsp|
+    vsp.vm.provision "file", source: "vsp/pki/signing-private-key.pk8", destination: "~/pki/signing-private-key.pk8"
+    vsp.vm.provision "file", source: "vsp/pki/encryption-private-key.pk8", destination: "~/pki/encryption-private-key.pk8"
+    vsp.vm.provision "file", source: "vsp/upstart", destination: "~/verify-service-provider.conf"
+    vsp.vm.provision "file", source: "vsp/vsp.env", destination: "~/vsp.env"
+
+    vsp.vm.provision "shell", path: "vsp/provision.sh"
+  end
+
+  config.vm.define "lms" do |lms|
+    lms.vm.provision "file", source: "lms/upstart", destination: "~/verify-local-matching-service-example.conf"
+    lms.vm.provision "file", source: "lms/lms.env", destination: "~/lms.env"
+
+    lms.vm.provision "shell", path: "lms/provision.sh"
+  end
+end
