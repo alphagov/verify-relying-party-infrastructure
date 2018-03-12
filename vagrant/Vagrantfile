@@ -24,4 +24,11 @@ Vagrant.configure("2") do |config|
 
     lms.vm.provision "shell", path: "lms/provision.sh"
   end
+
+  config.vm.define "pvsrp" do |pvsrp|
+    pvsrp.vm.provision "file", source: "pvsrp/upstart", destination: "~/passport-verify-stub-relying-party.conf"
+    pvsrp.vm.provision "file", source: "pvsrp/pvsrp.env", destination: "~/pvsrp.env"
+
+    pvsrp.vm.provision "shell", path: "pvsrp/provision.sh"
+  end
 end

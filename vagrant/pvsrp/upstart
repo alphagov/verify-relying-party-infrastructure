@@ -1,0 +1,17 @@
+description "Upstart config for Passport Verify Stub Relying Party"
+
+start on runlevel [2345]
+stop on starting rc RUNLEVEL=[06]
+
+kill signal TERM
+kill timeout 30
+
+setuid ubuntu # TODO - what user?
+
+script
+  set -a
+  . /opt/verify/passport-verify-stub-relying-party/.env
+  set +a
+  exec node /opt/verify/passport-verify-stub-relying-party/build/src/index.js
+end script
+
