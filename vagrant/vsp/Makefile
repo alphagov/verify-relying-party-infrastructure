@@ -1,9 +1,13 @@
 .PHONY: all
-all: pki pki/signing-private-key.pk8 pki/signing-certificate.crt pki/encryption-private-key.pk8 pki/encryption-certificate.crt
+all: vsp.env
 
 .PHONY: clean
 clean:
+	rm -f vsp.env
 	rm -rf pki
+
+vsp.env: pki pki/signing-private-key.pk8 pki/signing-certificate.crt pki/encryption-private-key.pk8 pki/encryption-certificate.crt
+	./vsp.env.template > $@
 
 pki:
 	mkdir pki

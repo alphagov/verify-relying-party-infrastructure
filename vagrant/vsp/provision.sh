@@ -14,5 +14,9 @@ then
   unzip verify-service-provider-1.0.0.zip
 fi
 
-chmod +x /home/vagrant/start.sh
+sudo rm -rf /opt/verify/verify-service-provider
+sudo mv verify-service-provider-1.0.0 /opt/verify/verify-service-provider
+sudo mv vsp.env /opt/verify/verify-service-provider/.env
 
+sudo mv verify-service-provider.conf /etc/init
+sudo service verify-service-provider start

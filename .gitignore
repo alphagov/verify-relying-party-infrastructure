@@ -5,3 +5,4 @@
 secrets.auto.tfvars
 .vagrant
 /vagrant/vsp/pki
+/vagrant/vsp/vsp.env
