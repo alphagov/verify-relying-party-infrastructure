@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "file", source: "pki/signing-private-key.pk8", destination: "~/pki/signing-private-key.pk8"
   config.vm.provision "file", source: "pki/encryption-private-key.pk8", destination: "~/pki/encryption-private-key.pk8"
-  config.vm.provision "file", source: "verify-service-provider-upstart", destination: "~/verify-service-provider.conf"
+  config.vm.provision "file", source: "upstart", destination: "~/verify-service-provider.conf"
   config.vm.provision "file", source: "vsp.env", destination: "~/vsp.env"
 
   config.vm.provision "shell", path: "provision.sh"
