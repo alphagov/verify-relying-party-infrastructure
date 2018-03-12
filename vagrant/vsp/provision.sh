@@ -14,9 +14,17 @@ then
   unzip verify-service-provider-1.0.0.zip
 fi
 
-sudo rm -rf /opt/verify/verify-service-provider
+if [ ! -d /opt/verify ]
+then
+  sudo mkdir -p /opt/verify
+else
+  sudo rm -rf /opt/verify/verify-service-provider
+fi
+
 sudo mv verify-service-provider-1.0.0 /opt/verify/verify-service-provider
 sudo mv vsp.env /opt/verify/verify-service-provider/.env
+sudo chown ubuntu:ubuntu /opt/verify/verify-service-provider/.env
+sudo chmod 400 /opt/verify/verify-service-provider/.env
 
 sudo mv verify-service-provider.conf /etc/init
 sudo service verify-service-provider start

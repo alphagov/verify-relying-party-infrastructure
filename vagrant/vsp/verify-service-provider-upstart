@@ -10,7 +10,7 @@ setuid ubuntu # TODO - what user?
 
 script
   set -a
-  source /opt/verify/verify-service-provider/.env
+  . /opt/verify/verify-service-provider/.env
   set +a
   exec /opt/verify/verify-service-provider/bin/verify-service-provider
 end script
