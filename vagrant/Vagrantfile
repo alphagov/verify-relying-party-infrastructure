@@ -1,13 +1,23 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-unless File.exists?('vsp/pki/signing-private-key.pk8')
-  puts "\e[31mPlease run `cd vsp && make` to generate the pki before running vagrant\e[0m"
+unless File.exists?('vsp/pki/signing-private-key.pk8') && File.exists?('msa/pki/signing-private-key.pk8')
+  puts "\e[31mPlease run `make` to generate the pki before running vagrant\e[0m"
   exit 1
 end
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
+
+  config.vm.define "msa" do |msa|
+    msa.vm.provision "file", source: "msa/pki/signing-private-key.pk8", destination: "~/pki/signing-private-key.pk8"
+    msa.vm.provision "file", source: "msa/pki/encryption-private-key.pk8", destination: "~/pki/encryption-private-key.pk8"
+    msa.vm.provision "file", source: "msa/upstart", destination: "~/verify-matching-service-adapter.conf"
+    msa.vm.provision "file", source: "msa/msa.env", destination: "~/msa.env"
+    msa.vm.provision "file", source: "msa/config.yml", destination: "~/config.yml"
+
+    msa.vm.provision "shell", path: "msa/provision.sh"
+  end
 
   config.vm.define "vsp" do |vsp|
     vsp.vm.provision "file", source: "vsp/pki/signing-private-key.pk8", destination: "~/pki/signing-private-key.pk8"

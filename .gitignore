@@ -6,3 +6,5 @@ secrets.auto.tfvars
 .vagrant
 /vagrant/vsp/pki
 /vagrant/vsp/vsp.env
+/vagrant/msa/pki
+/vagrant/msa/msa.env

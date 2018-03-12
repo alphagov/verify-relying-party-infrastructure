@@ -16,7 +16,7 @@ sudo apt-get -qq install -y nodejs yarn
 if [ ! -d passport-verify-stub-relying-party ]
 then
   curl --silent -LO https://github.com/alphagov/passport-verify-stub-relying-party/releases/download/1.0.0/passport-verify-stub-relying-party-1.0.0.tgz
-  tar -xf passport-verify-stub-relying-party-1.0.0.tgz
+  tar -xf passport-verify-stub-relying-party-1.0.0.tgz 2> /dev/null
   mv package passport-verify-stub-relying-party
   (cd passport-verify-stub-relying-party && npm install --production)
 fi

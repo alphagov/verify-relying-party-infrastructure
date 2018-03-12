@@ -5,7 +5,7 @@ sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get -qq update
 sudo debconf-set-selections <<< 'oracle-java8-installer shared/accepted-oracle-license-v1-1 select true'
 sudo debconf-set-selections <<< 'oracle-java8-installer shared/accepted-oracle-license-v1-1 seen true'
-sudo apt-get -qq install -y unzip oracle-java8-installer
+sudo apt-get -qq install -y unzip oracle-java8-installer 2> /dev/null
 
 # Download the LMS
 if [ ! -d verify-local-matching-service-example ]
