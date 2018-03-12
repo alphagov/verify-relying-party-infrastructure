@@ -1,0 +1,16 @@
+description "Upstart config for Verify Local Matching Service Example"
+
+start on runlevel [2345]
+stop on starting rc RUNLEVEL=[06]
+
+kill signal TERM
+kill timeout 30
+
+setuid ubuntu # TODO - what user?
+
+script
+  set -a
+  . /opt/verify/verify-local-matching-service-example/.env
+  set +a
+  exec /opt/verify/verify-local-matching-service-example/bin/verify-local-matching-service-example
+end script
