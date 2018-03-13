@@ -7,7 +7,7 @@ server:
       port: 50211
 
 matchingServiceAdapter:
-  entityId: http://www.test-rp-ms.gov.uk/SAML2/MD
+  entityId: ${ENTITY_ID:-http://www.test-rp-ms.gov.uk/SAML2/MD}
   externalUrl: http://localhost:${MSA_PORT:-50210}/matching-service/POST
 
 localMatchingService:

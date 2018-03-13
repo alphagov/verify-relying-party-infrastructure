@@ -25,6 +25,7 @@ fi
 sudo mv "verify-matching-service-adapter-$version" /opt/verify/verify-matching-service-adapter
 sudo mv msa.env /opt/verify/verify-matching-service-adapter/.env
 sudo mv config.yml /opt/verify/verify-matching-service-adapter/config.yml
+
 sudo chown ubuntu:ubuntu /opt/verify/verify-matching-service-adapter/.env
 sudo chmod 400 /opt/verify/verify-matching-service-adapter/.env
 
