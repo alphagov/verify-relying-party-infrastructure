@@ -1,23 +1,17 @@
 Verify Relying Party Infrastucture
 ==================================
 
+:warning: This repository is a work in progress :warning:
+
 Infrastructure as code describing an environment that connects to GOV.UK Verify
 in the same way a government service would.
 
-Getting Started
----------------
+There are currently examples using various infrasctructure tools:
 
-Set up your aws creds by following the instructions in https://github.com/alphagov/verify-terraform#assuming-roles, then:
+- [Terraform](terraform) - manages Verify's own relying party environment
+- [Vagrant](vagrant) - provided for informational purposes only
 
-```
-cd terraform
-
-# To see what terraform thinks it should do:
-terraform plan
-
-# To have terraform set up the environment:
-terraform apply
-```
+See the READMEs inside the directories for details.
 
 Documentation
 -------------
