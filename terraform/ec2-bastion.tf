@@ -12,6 +12,7 @@ module "verify_connect_bastion" {
   disable_api_termination     = false
   source_dest_check           = false
   associate_public_ip_address = true
+  user_data                   = "${file("user-data.sh")}"
 
   tags = {
     Terraform   = "true"
