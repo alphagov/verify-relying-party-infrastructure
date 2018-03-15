@@ -13,6 +13,7 @@ module "verify_connect_vsp" {
   associate_public_ip_address = false
   source_dest_check           = false
   user_data                   = "${file("user-data.sh")}"
+  root_block_device           = ["volume_size = 50"]
 
   tags = {
     Terraform   = "true"

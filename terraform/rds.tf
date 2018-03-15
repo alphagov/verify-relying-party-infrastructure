@@ -1,7 +1,6 @@
 #module "verify-connect-db" {
 #  source     = "terraform-aws-modules/rds/aws"
 #  identifier = "verify-connect-db"
-
 #  engine             = "postgres"
 #  engine_version     = "9.6.3"
 #  instance_class     = "db.t2.micro"
@@ -16,3 +15,4 @@
 #  subnet_ids = ["${module.vpc.private_subnets}"]
 #  family     = "postgres9.6"
 #}
+

@@ -4,7 +4,7 @@ module "verify_connect_bastion" {
   name = "verify_connect_bastion"
 
   ami                         = "ami-3fc8d75b"
-  instance_type               = "t2.micro"
+  instance_type               = "t2.small"
   key_name                    = "default"
   monitoring                  = false
   vpc_security_group_ids      = ["${module.verify_connect_sg.this_security_group_id}"]
