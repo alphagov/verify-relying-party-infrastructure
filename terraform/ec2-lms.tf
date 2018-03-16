@@ -1,8 +1,4 @@
-module "verify_connect_lms" {
-  source = "terraform-aws-modules/ec2-instance/aws"
-
-  name = "verify_connect_lms"
-
+resource "aws_instance" "verify_connect_lms" {
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.small"
   key_name                    = "default"
@@ -14,8 +10,14 @@ module "verify_connect_lms" {
   source_dest_check           = false
   user_data                   = "${file("user-data.sh")}"
 
+  root_block_device {
+    volume_size           = "50"
+    delete_on_termination = "true"
+  }
+
   tags = {
     Terraform   = "true"
     Environment = "dev"
+    Name        = "verify_connect_lms"
   }
 }

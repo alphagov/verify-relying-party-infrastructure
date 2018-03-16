@@ -10,13 +10,18 @@ resource "aws_instance" "verify_connect_msa" {
   source_dest_check           = false
   user_data                   = "${file("msa/msa-user-data.sh")}"
 
+  root_block_device {
+    volume_size           = "50"
+    delete_on_termination = "true"
+  }
+
   provisioner "file" {
     source      = "msa/verify-matching-service-adapter.conf"
     destination = "/home/ubuntu/verify-matching-service-adapter.conf"
 
     connection {
-      type     = "ssh"
-      user     = "ubuntu"
+      type         = "ssh"
+      user         = "ubuntu"
       bastion_host = "35.177.196.23"
       bastion_user = "ubuntu"
     }
@@ -27,8 +32,8 @@ resource "aws_instance" "verify_connect_msa" {
     destination = "/home/ubuntu/config.yml"
 
     connection {
-      type     = "ssh"
-      user     = "ubuntu"
+      type         = "ssh"
+      user         = "ubuntu"
       bastion_host = "35.177.196.23"
       bastion_user = "ubuntu"
     }
@@ -39,8 +44,8 @@ resource "aws_instance" "verify_connect_msa" {
     destination = "/home/ubuntu/msa.env"
 
     connection {
-      type     = "ssh"
-      user     = "ubuntu"
+      type         = "ssh"
+      user         = "ubuntu"
       bastion_host = "35.177.196.23"
       bastion_user = "ubuntu"
     }

@@ -1,8 +1,4 @@
-module "verify_connect_app" {
-  source = "terraform-aws-modules/ec2-instance/aws"
-
-  name = "verify_connect_app"
-
+resource "aws_instance" "verify_connect_app" {
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.small"
   key_name                    = "default"
@@ -14,9 +10,15 @@ module "verify_connect_app" {
   user_data                   = "${file("user-data.sh")}"
   source_dest_check           = false
 
+  root_block_device {
+    volume_size           = "50"
+    delete_on_termination = "true"
+  }
+
   tags = {
     Terraform   = "true"
     Environment = "dev"
     Application = "passport-verify-stub-relying-party"
+    Name        = "verify_connect_app"
   }
 }

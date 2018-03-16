@@ -1,7 +1,4 @@
-module "verify_connect_bastion" {
-  source = "terraform-aws-modules/ec2-instance/aws"
-
-  name = "verify_connect_bastion"
+resource "aws_instance" "verify_connect_bastion" {
 
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.small"
@@ -13,9 +10,9 @@ module "verify_connect_bastion" {
   source_dest_check           = false
   associate_public_ip_address = true
   user_data                   = "${file("user-data.sh")}"
-
   tags = {
     Terraform   = "true"
     Environment = "dev"
+    Name = "verify_connect_bastion"
   }
 }
