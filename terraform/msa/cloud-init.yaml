@@ -1,0 +1,89 @@
+#cloud-config
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDXmBraPYRMsCCj0Hw1q73SW8d4hBXcoZMxdifRqVYs4/4GZqaJJbWKRaQ2eRAN6yeHgkAWdsrPx6NBbq12QGRIVpNF6C3eaIVQaU+fdOWepFi9dDbFWymPFspWC1pSwXBl/A3k4JbwyCsaUO7TfjzL4XB3CYjVkopmlvjjQTHBB8sdSm922A/czEK6DAqmDXrU5iDaiauN/dXx2qk9El6dfTyXDFXADgFXN3rMvPGY+V8UPSGUDSkB5K+SjyrtbkP+QaKvavoyHF/k+Tvib7Wp3fZgcBF9vQZ9tTQ22CBd4YJbrUSqMCVNFMpc09WDHw/o15acmUtKdfvbbowdPuyt2mUzkJsj5brfHTs22uHln5Bojs3RcnO74mO8aEIJ0WmbExM/Um4wuBrSOSAxxBsktnVAKkEfb2XtbYLEruyp9z/ycPELBf4iaES3pgbBVogvX+cq8TPSOSu7x8hM3+Cvkw7j07GhZsmTQEHERKPnHMa+LeaXkKAQOecHPUQZ6HhVDHuEI9agQ0GVufsUs3asOcwIZwXSLvXGymbsgnhogpxU9Cy5CXZtsPfZWSbq5n+OuRDKjT19Eks/8fSenvSuIaDkKZbCuhEwIutvTO3rZmzm/7vFnGA0YTkJX5qKNDgvtPDJJkn2MuEwyRbSCX2CH66WOEfkCE4MJqDthjERBw== richard.towers@digital.cabinet-office.gov.uk
+
+final_message: "DONE: cloud-init finished"
+
+write_files:
+  - path: /opt/verify/verify-matching-service-adapter/config.yml
+    content: |
+      server:
+        applicationConnectors:
+          - type: http
+            port: 50210
+        adminConnectors:
+          - type: http
+            port: 50211
+      matchingServiceAdapter:
+        entityId: https://verify-relying-party-msa.com
+        externalUrl: http://localhost:50210/matching-service/POST
+      localMatchingService:
+        matchUrl: http://192.168.50.103:50500/match-user
+        accountCreationUrl: http://example.com/todo/lms/uac/url
+      hub:
+        ssoUrl: https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/SAML2/SSO
+        trustStore:
+          type: file
+          store: /opt/verify/verify-matching-service-adapter/test_ida_hub.ts
+          password: puppet
+      metadata:
+        url: https://compliance-tool-reference.ida.digital.cabinet-office.gov.uk/SAML2/metadata/federation
+        jerseyClientName: metadata-client
+        trustStore:
+          type: file
+          store: /opt/verify/verify-matching-service-adapter/test_ida_metadata.ts
+          password: puppet
+      signingKeys:
+        primary:
+          publicKey:
+            type: encoded
+            cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNuRENDQVlRQ0NRRGNDV3lLT2creTF6QU5CZ2txaGtpRzl3MEJBUXNGQURBUU1RNHdEQVlEVlFRREV3VXgKTWpReU9UQWVGdzB4T0RBek1UUXhNakF5TXpkYUZ3MHhPREEwTVRNeE1qQXlNemRhTUJBeERqQU1CZ05WQkFNVApCVEV5TkRJNU1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBcmdnaTRsckpsNDB5CjVEaS9JYlRPSDlCcytGVUJjWHhxTkhtU1Bab1BleE9pQnZHNHBGSStyM1JWZ1lZakJyUk82aDZzcWRabHpEY2UKV0l0cWtwQ3psaVozUE11SXZEaDhxMVBYT3VGOENqTnl1K2hpbDJMYVpCT2luOHRwM2Fhdi9VSUViVE4zenF2VwpXWGxuZU9aWDJBY0phZkNZSWFBYWdoZlBlZmhUQUVVVFJmYVNna1lhajFObjRxV2pOMEJIckFNWHNLdTFDaUpPCjQwaXd2Uml3YlJKT0QwQ0NMcUE0bEpVYWRrclExekJPbGtHVkxSS2NHUXRQNHNxZFBWY1hRVFRWMjAyWVI1M1cKaGlqaDNpZTJKTTFZSGZ4SVdsQkJoeTlPc2VsL3VndnFjVVNxSUdQaGxJOG1FRmtMY3loODB3T3pCY2NJVVNXMwpDVDNQUlJOSTJRSURBUUFCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBMlFYTkhhQTkwVmlOTHExRFY2QnoxCmJIbzBML3c3Snh6R0pNRCtuOUI5cGl2WjJuZWtwSVdHTmJndGJKMlg3M2E2M1N4a1FCb3p6SlNZNlB4dTJOaU0Kek5hcDlJOHJQZEpHS0xzU2hyd2tWQ1BRSHhNK0hnVUpUY2ZSUFhoT3FDL3FUa05iZkswc0cvZDVFQkIrOEg1RwplaCtZejA4bUFhWVFCckoxbDZ6M3dqSC9rREZoSWVjWGM4Y0dNbS9NM2t1RG5BUkJ2UGdITUZsSjNaWDR2aXgwCkowc2lUWWtkbnBhR3JBQ3B3T2MxRjZsYUlvb3JleW5oWlRRWGwvTE5CbUdMMUNoMUthTzd3eGNiR2pNblI0eVcKcnk2WnlVVXUxTldZalUzTkVNMHBRdHhtTUpyem5IbUFENGFYNHNvRTdjMFh3bHE2OXhUNEE2cVppVC81Y1ZwbgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+            name: signing.primary.crt
+          privateKey:
+            type: encoded
+            key: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCkFjbz3wrtg0uAGhfaldoMUUemN9/vjr5E1R9E/sdVIhXYQFa0ZLkJn/p4DT4r0xAOcZapqmBeG6TRZCuOHToRQgKxGNAo5ivoA6PQb9BHkyaZJJNTjmnGNwdujIDtA8oaz0wLOgVA4iDPrByVhbtIfcbXjk7AVUnhkyWHjTZINyAmOj/5qjz1NaPWv7d3xhWGnqlvj3o8W9hYnZPb1z+gwfPKq2kTSmvJ8Fra3/yaPHYvL46/CEvedNl0akJlG7B3gtgEFqurL6cEBdRBd4q71pTr6GUjuIlKC0dSUEB4FjfOPoeMInb31oK18SGE/iGt+eDqibkLJqcEerkx26nXAgMBAAECggEAMzdb37L2zjv1DP8YAvpTHRUhsBgwpa2AZiu/nuGHhmMlPmKWrafiucZdf6tihHtUv61kwYCUo8stHs6NacZloY1hGbYNAzcU7U51i1HbSPv9SD/KXIJPMbdrcm4Yr+JG6ydZLQfnK+FpLGkkYudjFbVso0uf+Ril/urXBABnuRI73HLqFkCavZCdSpgMy9vCTkEB901zC6j/kHzn9uFzQDtIN4IfuPHjn9Mj5QcperuANRO0F95MLSI+lCtf5PJevDEOdEdTteUBmZpi9hJqq5haJ8BrbvQnRYI0ogqmA6USnZjrHrv3n4R9Y9EK21NJZ57MZUUaRIa+9ubIsELTwQKBgQDNHT98stFsUcRv8jtgC2kuQlkuwrGfhC6KBZa7B8VXsDVsB3ogvQzzNNqRkYgE6SQv29+aiODgapdNB9rjuJCNtr95Pj3XcAz1pldaaycxKT7Wx/bGIJRYOpoGffcyp0XGAE8a4LJVJskP/bNuq0uGCoC9FflmMHVqwDUM0UbpzQKBgQDMy1KVgi7NqGf0x1DjieP8EN6n7KYPRGQHn3XfFqFY83iAUaFSz4/pF8DwuwnlC9bC3Tmc9vM1PwXzEG16s+yA+zv6fRbm4zk5vj6wGFLxk1sZi9VZI2Ji/4FYZ23gryLc5YTKYkOAFWGV22bdC5RQNr5FUZdwEXGeArk2wFluMwKBgGmZzk7YDYQUEOuFrdYD6fH8DMhLSoGS3xcGS5UdKhe8S7TDoLfsPReVtZXOdFX65juRmuyH3icMGbt5+NLW+e1MEgZM6i/Zq4JpUn3lvvbLgmO37bARo+5MtXH0Nmmovv5yuEdhOc8nOcr21gN7Q1XOYHt5Lb7T4g/Ex0tDD5xdAoGAI9bNLAbtQ+Zd0vNyj29ZK4qUPJTodrGEQ+U/Dnx6XgO1qdcfQUu7ppIWnMpOr/vDaLSoWXTKGR5fXysXzaphEC1nUK3FbUCEijtl4xFOqqIcBjt3abMMi8ClFSB8lR5xHnE4LObHY0namwwbU0GsgeEiqSTfOKiE1p8pZJCC1gsCgYB6KMd1RvjlFg43GQ8fK45dsyQxph7NO9h2snsMgBRmzMFmOfX0TetkI3bMxDiVK7K1BCooMfNXqh3MooHcagNaovUjLJQsf+QuwtqgJpe0iZjaWazt7UlTd9rAyyaXexo1TSEqG7whmpya5hQggRSWsC72kMgogaQh2aq9NP3yKg==
+      encryptionKeys:
+        - publicKey:
+            type: encoded
+            cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNuRENDQVlRQ0NRRGNDV3lLT2creTF6QU5CZ2txaGtpRzl3MEJBUXNGQURBUU1RNHdEQVlEVlFRREV3VXgKTWpReU9UQWVGdzB4T0RBek1UUXhNakF5TXpkYUZ3MHhPREEwTVRNeE1qQXlNemRhTUJBeERqQU1CZ05WQkFNVApCVEV5TkRJNU1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBTUlJQkNnS0NBUUVBcmdnaTRsckpsNDB5CjVEaS9JYlRPSDlCcytGVUJjWHhxTkhtU1Bab1BleE9pQnZHNHBGSStyM1JWZ1lZakJyUk82aDZzcWRabHpEY2UKV0l0cWtwQ3psaVozUE11SXZEaDhxMVBYT3VGOENqTnl1K2hpbDJMYVpCT2luOHRwM2Fhdi9VSUViVE4zenF2VwpXWGxuZU9aWDJBY0phZkNZSWFBYWdoZlBlZmhUQUVVVFJmYVNna1lhajFObjRxV2pOMEJIckFNWHNLdTFDaUpPCjQwaXd2Uml3YlJKT0QwQ0NMcUE0bEpVYWRrclExekJPbGtHVkxSS2NHUXRQNHNxZFBWY1hRVFRWMjAyWVI1M1cKaGlqaDNpZTJKTTFZSGZ4SVdsQkJoeTlPc2VsL3VndnFjVVNxSUdQaGxJOG1FRmtMY3loODB3T3pCY2NJVVNXMwpDVDNQUlJOSTJRSURBUUFCTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBMlFYTkhhQTkwVmlOTHExRFY2QnoxCmJIbzBML3c3Snh6R0pNRCtuOUI5cGl2WjJuZWtwSVdHTmJndGJKMlg3M2E2M1N4a1FCb3p6SlNZNlB4dTJOaU0Kek5hcDlJOHJQZEpHS0xzU2hyd2tWQ1BRSHhNK0hnVUpUY2ZSUFhoT3FDL3FUa05iZkswc0cvZDVFQkIrOEg1RwplaCtZejA4bUFhWVFCckoxbDZ6M3dqSC9rREZoSWVjWGM4Y0dNbS9NM2t1RG5BUkJ2UGdITUZsSjNaWDR2aXgwCkowc2lUWWtkbnBhR3JBQ3B3T2MxRjZsYUlvb3JleW5oWlRRWGwvTE5CbUdMMUNoMUthTzd3eGNiR2pNblI0eVcKcnk2WnlVVXUxTldZalUzTkVNMHBRdHhtTUpyem5IbUFENGFYNHNvRTdjMFh3bHE2OXhUNEE2cVppVC81Y1ZwbgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+            name: encryption.primary.crt
+          privateKey:
+            type: encoded
+            key: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCkFjbz3wrtg0uAGhfaldoMUUemN9/vjr5E1R9E/sdVIhXYQFa0ZLkJn/p4DT4r0xAOcZapqmBeG6TRZCuOHToRQgKxGNAo5ivoA6PQb9BHkyaZJJNTjmnGNwdujIDtA8oaz0wLOgVA4iDPrByVhbtIfcbXjk7AVUnhkyWHjTZINyAmOj/5qjz1NaPWv7d3xhWGnqlvj3o8W9hYnZPb1z+gwfPKq2kTSmvJ8Fra3/yaPHYvL46/CEvedNl0akJlG7B3gtgEFqurL6cEBdRBd4q71pTr6GUjuIlKC0dSUEB4FjfOPoeMInb31oK18SGE/iGt+eDqibkLJqcEerkx26nXAgMBAAECggEAMzdb37L2zjv1DP8YAvpTHRUhsBgwpa2AZiu/nuGHhmMlPmKWrafiucZdf6tihHtUv61kwYCUo8stHs6NacZloY1hGbYNAzcU7U51i1HbSPv9SD/KXIJPMbdrcm4Yr+JG6ydZLQfnK+FpLGkkYudjFbVso0uf+Ril/urXBABnuRI73HLqFkCavZCdSpgMy9vCTkEB901zC6j/kHzn9uFzQDtIN4IfuPHjn9Mj5QcperuANRO0F95MLSI+lCtf5PJevDEOdEdTteUBmZpi9hJqq5haJ8BrbvQnRYI0ogqmA6USnZjrHrv3n4R9Y9EK21NJZ57MZUUaRIa+9ubIsELTwQKBgQDNHT98stFsUcRv8jtgC2kuQlkuwrGfhC6KBZa7B8VXsDVsB3ogvQzzNNqRkYgE6SQv29+aiODgapdNB9rjuJCNtr95Pj3XcAz1pldaaycxKT7Wx/bGIJRYOpoGffcyp0XGAE8a4LJVJskP/bNuq0uGCoC9FflmMHVqwDUM0UbpzQKBgQDMy1KVgi7NqGf0x1DjieP8EN6n7KYPRGQHn3XfFqFY83iAUaFSz4/pF8DwuwnlC9bC3Tmc9vM1PwXzEG16s+yA+zv6fRbm4zk5vj6wGFLxk1sZi9VZI2Ji/4FYZ23gryLc5YTKYkOAFWGV22bdC5RQNr5FUZdwEXGeArk2wFluMwKBgGmZzk7YDYQUEOuFrdYD6fH8DMhLSoGS3xcGS5UdKhe8S7TDoLfsPReVtZXOdFX65juRmuyH3icMGbt5+NLW+e1MEgZM6i/Zq4JpUn3lvvbLgmO37bARo+5MtXH0Nmmovv5yuEdhOc8nOcr21gN7Q1XOYHt5Lb7T4g/Ex0tDD5xdAoGAI9bNLAbtQ+Zd0vNyj29ZK4qUPJTodrGEQ+U/Dnx6XgO1qdcfQUu7ppIWnMpOr/vDaLSoWXTKGR5fXysXzaphEC1nUK3FbUCEijtl4xFOqqIcBjt3abMMi8ClFSB8lR5xHnE4LObHY0namwwbU0GsgeEiqSTfOKiE1p8pZJCC1gsCgYB6KMd1RvjlFg43GQ8fK45dsyQxph7NO9h2snsMgBRmzMFmOfX0TetkI3bMxDiVK7K1BCooMfNXqh3MooHcagNaovUjLJQsf+QuwtqgJpe0iZjaWazt7UlTd9rAyyaXexo1TSEqG7whmpya5hQggRSWsC72kMgogaQh2aq9NP3yKg==
+  - path: /etc/init/verify-matching-service-adapter.conf
+    content: |
+      description "Upstart config for Verify Matching Service Adapter"
+
+      start on runlevel [2345]
+      stop on starting rc RUNLEVEL=[06]
+
+      kill signal TERM
+      kill timeout 30
+
+      setuid ubuntu
+
+      env CLASSPATH=/opt/verify/verify-matching-service-adapter/lib
+
+      script
+        exec java -jar /opt/verify/verify-matching-service-adapter/verify-matching-service-adapter.jar server /opt/verify/verify-matching-service-adapter/config.yml
+      end script
+
+apt_sources:
+  - source: "ppa:webupd8team/java"
+
+package_upgrade: true
+
+bootcmd:
+  - cloud-init-per once accepted-oracle-license-v1-1 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+
+packages:
+  - unzip
+  - oracle-java8-installer
+  - oracle-java8-set-default
+
+runcmd:
+ - cd /home/ubuntu
+ - curl --silent -LO 'https://github.com/alphagov/verify-matching-service-adapter/releases/download/2.2.0-737/verify-matching-service-adapter-2.2.0-737.zip'
+ - unzip 'verify-matching-service-adapter-2.2.0-737.zip'
+ - mv verify-matching-service-adapter-2.2.0-737/* /opt/verify/verify-matching-service-adapter
+ - service verify-matching-service-adapter start

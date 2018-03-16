@@ -8,47 +8,11 @@ resource "aws_instance" "verify_connect_msa" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("msa/msa-user-data.sh")}"
+  user_data                   = "${file("msa/cloud-init.yaml")}"
 
   root_block_device {
     volume_size           = "50"
     delete_on_termination = "true"
-  }
-
-  provisioner "file" {
-    source      = "msa/verify-matching-service-adapter.conf"
-    destination = "/home/ubuntu/verify-matching-service-adapter.conf"
-
-    connection {
-      type         = "ssh"
-      user         = "ubuntu"
-      bastion_host = "35.177.196.23"
-      bastion_user = "ubuntu"
-    }
-  }
-
-  provisioner "file" {
-    source      = "msa/config.yml"
-    destination = "/home/ubuntu/config.yml"
-
-    connection {
-      type         = "ssh"
-      user         = "ubuntu"
-      bastion_host = "35.177.196.23"
-      bastion_user = "ubuntu"
-    }
-  }
-
-  provisioner "file" {
-    source      = "msa/msa.env"
-    destination = "/home/ubuntu/msa.env"
-
-    connection {
-      type         = "ssh"
-      user         = "ubuntu"
-      bastion_host = "35.177.196.23"
-      bastion_user = "ubuntu"
-    }
   }
 
   tags = {
