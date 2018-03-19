@@ -8,7 +8,7 @@ resource "aws_instance" "verify_connect_lms" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("user-data.sh")}"
+  user_data                   = "${file("lms/cloud-init.yaml")}"
 
   root_block_device {
     volume_size           = "50"
