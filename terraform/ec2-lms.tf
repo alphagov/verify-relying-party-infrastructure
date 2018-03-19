@@ -1,6 +1,6 @@
 resource "aws_instance" "verify_connect_lms" {
   ami                         = "ami-3fc8d75b"
-  instance_type               = "t2.small"
+  instance_type               = "t2.medium"
   key_name                    = "default"
   monitoring                  = false
   vpc_security_group_ids      = ["${module.verify_connect_sg.this_security_group_id}"]

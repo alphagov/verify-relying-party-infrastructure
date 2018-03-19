@@ -1,5 +1,4 @@
 resource "aws_instance" "verify_connect_bastion" {
-
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.small"
   key_name                    = "default"
@@ -10,9 +9,10 @@ resource "aws_instance" "verify_connect_bastion" {
   source_dest_check           = false
   associate_public_ip_address = true
   user_data                   = "${file("user-data.sh")}"
+
   tags = {
     Terraform   = "true"
     Environment = "dev"
-    Name = "verify_connect_bastion"
+    Name        = "verify_connect_bastion"
   }
 }
