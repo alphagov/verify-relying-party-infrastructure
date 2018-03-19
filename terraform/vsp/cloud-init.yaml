@@ -48,7 +48,7 @@ runcmd:
  - cd /home/ubuntu
  - curl --silent -LO 'https://github.com/alphagov/verify-service-provider/releases/download/1.0.0/verify-service-provider-1.0.0.zip'
  - unzip 'verify-service-provider-1.0.0.zip'
- - mv verify-service-provider-1.0.0/verify-service-provider-1.0.0/* /opt/verify/verify-service-provider
+ - mv verify-service-provider-1.0.0/* /opt/verify/verify-service-provider
  - service verify-service-provider start
 
 final_message: "DONE: cloud-init finished"
