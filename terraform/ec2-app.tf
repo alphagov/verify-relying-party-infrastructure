@@ -7,7 +7,7 @@ resource "aws_instance" "verify_connect_app" {
   subnet_id                   = "${module.vpc.private_subnets[0]}"
   disable_api_termination     = false
   associate_public_ip_address = false
-  user_data                   = "${file("user-data.sh")}"
+  user_data                   = "${file("app/cloud-init.yaml")}"
   source_dest_check           = false
 
   root_block_device {
