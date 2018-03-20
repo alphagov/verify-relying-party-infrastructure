@@ -8,7 +8,7 @@ resource "aws_instance" "verify_connect_msa" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("msa/cloud-init.yaml")}"
+  user_data                   = "${file("templates/msa/cloud-init.yaml.template")}"
 
   root_block_device {
     volume_size           = "50"
