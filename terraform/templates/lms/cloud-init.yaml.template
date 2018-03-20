@@ -19,7 +19,7 @@ packages:
 write_files:
   - path: /opt/verify/verify-local-matching-service-example/.env
     content: |
-      DB_URI="jdbc:postgresql://10.0.2.2:5432/postgres?user=postgres"
+      DB_URI="jdbc:postgresql://${db_endpoint}/verify-connect-db?user=${dbuser}&password=${dbpass}"
 
   - path: /etc/init/verify-local-matching-service-example.conf
     content: |

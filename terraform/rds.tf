@@ -1,4 +1,4 @@
-module "verify-connect-db" {
+module "verify_connect_db" {
   source             = "terraform-aws-modules/rds/aws"
   identifier         = "verify-connect-db"
   engine             = "postgres"

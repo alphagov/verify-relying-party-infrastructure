@@ -1,6 +1,16 @@
+data "template_file" "lms_user_data" {
+  template = "${file("templates/lms/cloud-init.yaml.template")}"
+
+  vars {
+    dbuser = "${var.dbuser}"
+    dbpass = "${var.dbpass}"
+    db_endpoint = "${module.verify_connect_db.this_db_instance_endpoint}"
+  }
+}
+
 resource "aws_instance" "verify_connect_lms" {
   ami                         = "ami-3fc8d75b"
-  instance_type               = "t2.medium"
+  instance_type               = "t2.small"
   key_name                    = "default"
   monitoring                  = false
   vpc_security_group_ids      = ["${module.verify_connect_sg.this_security_group_id}"]
@@ -8,7 +18,7 @@ resource "aws_instance" "verify_connect_lms" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("templates/lms/cloud-init.yaml.template")}"
+  user_data                   = "${data.template_file.lms_user_data.rendered}"
 
   root_block_device {
     volume_size           = "50"
