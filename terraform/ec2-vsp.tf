@@ -8,7 +8,7 @@ resource "aws_instance" "verify_connect_vsp" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("vsp/cloud-init.yaml")}"
+  user_data                   = "${file("templates/vsp/cloud-init.yaml.template")}"
 
   root_block_device {
     volume_size           = "50"

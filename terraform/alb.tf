@@ -19,7 +19,7 @@ resource "aws_alb_listener" "vsp_listener" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = "aws_lb_target_group.VSP.arn"
+    target_group_arn = "${aws_lb_target_group.VSP.arn}"
     type             = "forward"
   }
 }
