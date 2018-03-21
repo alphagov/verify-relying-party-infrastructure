@@ -24,9 +24,8 @@ resource "aws_lb_listener" "msa_listener" {
   }
 }
 
-#resource "aws_alb_target_group_attachment" "svc_physical_external" {
-#  target_group_arn = "${aws_alb_target_group.alb_target_group.arn}"
-#  target_id        = "${aws_instance.svc.id}"
-#  port             = 50210
-#}
-
+resource "aws_alb_target_group_attachment" "msa_service" {
+  target_group_arn = "${aws_lb_target_group.msa.arn}"
+  target_id        = "${aws_instance.verify_connect_msa.id}"
+  port             = 50210
+}

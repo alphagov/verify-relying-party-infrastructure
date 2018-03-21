@@ -24,9 +24,9 @@ resource "aws_alb_listener" "vsp_listener" {
   }
 }
 
-#resource "aws_alb_target_group_attachment" "svc_physical_external" {
-#  target_group_arn = "${aws_alb_target_group.alb_target_group.arn}"
-#  target_id        = "${aws_instance.svc.id}"
-#  port             = 50400
-#}
+resource "aws_alb_target_group_attachment" "vsp_service" {
+  target_group_arn = "${aws_lb_target_group.vsp.arn}"
+  target_id        = "${aws_instance.verify_connect_vsp.id}"
+  port             = 50400
+}
 
