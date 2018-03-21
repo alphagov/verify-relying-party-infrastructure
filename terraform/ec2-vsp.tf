@@ -2,7 +2,7 @@ data "template_file" "vsp_user_data" {
   template = "${file("templates/vsp/cloud-init.yaml.template")}"
 
   vars {
-    alb_endpoint = "${aws_lb.verify_connect_alb.dns_name}"
+    alb_endpoint = "${aws_lb.verify_connect_msa_lb.dns_name}"
   }
 }
 

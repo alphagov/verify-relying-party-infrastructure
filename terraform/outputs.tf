@@ -46,7 +46,6 @@ output "this_security_group_description" {
   value       = "${module.verify_connect_sg.this_security_group_description}"
 }
 
-
 output "this_db_instance_endpoint" {
   description = "The database connection endpoint"
   value       = "${module.verify_connect_db.this_db_instance_endpoint}"

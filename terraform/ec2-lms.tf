@@ -2,8 +2,8 @@ data "template_file" "lms_user_data" {
   template = "${file("templates/lms/cloud-init.yaml.template")}"
 
   vars {
-    dbuser = "${var.dbuser}"
-    dbpass = "${var.dbpass}"
+    dbuser      = "${var.dbuser}"
+    dbpass      = "${var.dbpass}"
     db_endpoint = "${module.verify_connect_db.this_db_instance_endpoint}"
   }
 }
