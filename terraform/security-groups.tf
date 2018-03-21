@@ -11,8 +11,16 @@ module "verify_connect_sg" {
       cidr_blocks = "213.86.153.212/30,213.86.153.235/32,213.86.153.236/31,85.133.67.244/32,213.86.153.245/32,10.0.0.0/16"
     },
     {
+      rule        = "http-80-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
       rule        = "https-443-tcp"
       cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "postgresql-tcp"
+      cidr_blocks = "10.0.0.0/16"
     },
   ]
 

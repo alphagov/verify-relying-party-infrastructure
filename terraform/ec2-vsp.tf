@@ -1,3 +1,11 @@
+data "template_file" "vsp_user_data" {
+  template = "${file("templates/vsp/cloud-init.yaml.template")}"
+
+  vars {
+    alb_endpoint = "${aws_lb.verify_connect_alb.dns_name}"
+  }
+}
+
 resource "aws_instance" "verify_connect_vsp" {
   ami                         = "ami-3fc8d75b"
   instance_type               = "t2.small"
@@ -8,7 +16,7 @@ resource "aws_instance" "verify_connect_vsp" {
   disable_api_termination     = false
   associate_public_ip_address = false
   source_dest_check           = false
-  user_data                   = "${file("templates/vsp/cloud-init.yaml.template")}"
+  user_data                   = "${data.template_file.vsp_user_data.rendered}"
 
   root_block_device {
     volume_size           = "50"
