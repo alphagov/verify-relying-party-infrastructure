@@ -1,0 +1,25 @@
+#cloud-config
+
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDrZfMuJRmcRtpLS3X/oKTKiGwmFSjIEAZd3N3zszJd49BdSlqiXUl2LnZt89mdgzc2zDfrrM9jTbmlS5ImxDWMCgDnAxBSsQaV6vu4HAhsd11stV1qkspqc0vqbZbOVNEdz1r1g3Fodt5gatcZZ48G3Hb+x0L5ISW+74Ie3WJkQZpVj11dUNyyfSHW+b7Ue2kniosRX9+slJUzvxuJswkYP65broIZ/1xe6LB566m1lg0Qg3YJn1IAVXMXbfE4ZqgMwjXPKv6EYPy5AHuChhxqlT/aEZET8jn7Z0H01csWVIsdAal9BO/RFoi4PDZLyyKSbCtUv4SlfYLMW540Qn+0Lkn3BqgFRAgqcwOmXtE2B5GX7lN5qK1voeS0wEMgJ+uO+eyt81da10bDbpB+qR40Bxefobs1FjefuAY7/y6ApEolB9Azm3U3f9Z7tK4CmomnjFcQZ+dLQJbJ+Ya4c77sDo1lR0iE4ZlP3LgnYC4pwy76XjLcAbMhnsuM/o8YjnPx7uS78kAWChD7kivcfNLOtt5GN/f6yPHAKJJdKUs9h9PNkAPc4Dmd+ZaF2MpopBBfzvI1rh08FMoW7JUsBsNKoWhQfi2LP0tMzaK3oOh/+gION5nYEWaQbdQr1T6LqaGGiLq2EfE0BE1LwdCd8QDyhDzoULKqLxmnRRtT4q16FQ== robin.mitra@digital.cabinet-office.gov.uk
+
+package_upgrade: true
+
+apt_sources:
+  - source: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+
+packages:
+  - docker.io
+
+# TODO: Add command for generating certs.
+runcmd:
+  - cd /home/ubuntu
+  - git clone https://github.com/alphagov/passport-verify-stub-relying-party.git -b CTV-136
+  - cd passport-verify-stub-relying-party
+  - echo "Downloading docker-compose"
+  - sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+  - curl -O https://raw.githubusercontent.com/alphagov/verify-service-provider/CTV-136/scripts/init-compliance-tool-for-environment.sh && chmod +x init-compliance-tool-for-environment.sh
+  - ASSERTION_CONSUMER_SERVICE_URL=http://$(host $(curl -s ipinfo.io/ip) | cut -d ' ' -f5 | head -c-2):3200/verify/response ./init-compliance-tool-for-environment.sh custom 123
+  - sudo docker-compose up --build -d
+
+final_message: "DONE: cloud-init finished"

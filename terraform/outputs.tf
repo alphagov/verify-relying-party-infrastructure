@@ -45,3 +45,8 @@ output "this_security_group_description" {
   description = "The description of the security group"
   value       = "${module.verify_connect_sg.this_security_group_description}"
 }
+
+output "relying_party_ip" {
+  description = "The IP address of relying party front-end"
+  value       = ["${aws_instance.verify_connect_app.public_ip}"]
+}
