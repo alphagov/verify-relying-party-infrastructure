@@ -1,2 +1,1 @@
-variable "dbuser" {}
-variable "dbpass" {}
+

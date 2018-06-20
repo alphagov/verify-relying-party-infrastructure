@@ -1,4 +1,4 @@
-Verify Relying Party Infrastucture
+Verify Relying Party Infrastructure
 ==================================
 
 :warning: This repository is a work in progress :warning:
@@ -6,7 +6,7 @@ Verify Relying Party Infrastucture
 Infrastructure as code describing an environment that connects to GOV.UK Verify
 in the same way a government service would.
 
-There are currently examples using various infrasctructure tools:
+There are currently examples using various infrastructure tools:
 
 - [Terraform](terraform) - manages Verify's own relying party environment
 - [Vagrant](vagrant) - provided for informational purposes only
