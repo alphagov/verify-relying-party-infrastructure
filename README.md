@@ -1,6 +1,10 @@
 Verify Relying Party Infrastucture
 ==================================
 
+>**GOV.UK Verify has closed**
+>
+>This repository is out of date and has been archived
+
 :warning: This repository is a work in progress :warning:
 
 Infrastructure as code describing an environment that connects to GOV.UK Verify
